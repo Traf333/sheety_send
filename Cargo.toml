@@ -10,3 +10,4 @@ serde_json = "1.0"
 oauth2 = "4.0"
 lettre = "0.10"
 tokio = { version = "1", features = ["full"] }
+dotenv = "0.15.0"

@@ -1,41 +1,62 @@
-# Rust Spreadsheet Downloader and Emailer
+# Sheety Send - Google Sheets Downloader
 
-This Rust application downloads a public Google Sheets spreadsheet as an `.xlsx` file and sends it via email as an attachment.
+A Rust application that takes snapshot of a public spreadsheet as an `.xlsx` file and saves it locally with the current date in the filename.
 
 ## Features
 
-- Fetches a public Google Sheets spreadsheet using its URL.
-- Saves the spreadsheet as an `.xlsx` file.
-- Sends the saved file as an email attachment.
+- Fetches a public Google Sheets spreadsheet using its ID
+- Saves the spreadsheet as an `.xlsx` file with the current date in the filename
+- Configurable output directory for downloaded files
+- Comprehensive error handling and logging
+- Automatic date-based file naming
 
 ## Prerequisites
 
-- Rust and Cargo installed ([Install Rust](https://www.rust-lang.org/tools/install)).
-- SMTP server credentials for sending emails (e.g., Gmail SMTP).
+- Rust and Cargo installed ([Install Rust](https://www.rust-lang.org/tools/install))
 
 ## Setup
 
 1. **Clone the repository:**
 
 ```bash
-   git clone https://github.com/your_username/your_project.git
-   cd your_project
+git clone https://github.com/your_username/sheety_send.git
+cd sheety_send
 ```
 
 2. **Create a .env file in the project root:**
 
-```
-SPREADSHEET_URL="https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit#gid=0"
-RECIPIENT_EMAIL="recipient@example.com"
-SMTP_USERNAME="your_smtp_username"
-SMTP_PASSWORD="your_smtp_password"
+```env
+# Required: Google Sheets ID from the spreadsheet URL
+SPREADSHEET_ID="YOUR_SPREADSHEET_ID"
+
+# Optional: Directory where files will be saved (defaults to current directory)
+OUTPUT_DIR="./downloads"
 ```
 
-Replace placeholders (YOUR_SPREADSHEET_ID, recipient@example.com, your_smtp_username, your_smtp_password) with your actual values.
+### Configuration Options
+
+- `SPREADSHEET_ID`: (Required) Your Google Sheets ID. You can find this in the spreadsheet's URL:
+  `https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit`
+- `OUTPUT_DIR`: (Optional) Directory where downloaded files will be saved. If not specified, files will be saved in the current directory. The directory must exist.
+
+## Usage
 
 Build and run the application:
 
-```
+```bash
 cargo run
 ```
-This will fetch the spreadsheet, save it as sheet_data.xlsx, and send it to the specified email address.
+
+The application will:
+
+1. Download the specified spreadsheet
+2. Save it as `book-crossing-DD-MM-YYYY.xlsx` in the configured output directory
+3. Log the process, including success or any errors
+
+### Logging
+
+To see detailed logs while running, use:
+
+```bash
+RUST_LOG=info cargo run
+```

@@ -865,6 +865,7 @@ dependencies = [
 name = "sheety_send"
 version = "0.1.0"
 dependencies = [
+ "bytes",
  "chrono",
  "dotenv",
  "env_logger",

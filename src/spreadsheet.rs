@@ -9,11 +9,11 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 pub enum SpreadsheetError {
     #[error("Failed to fetch spreadsheet: {0}")]
-    FetchError(#[from] reqwest::Error),
+    RequestError(#[from] reqwest::Error),
     #[error("Failed to create file: {0}")]
-    FileCreationError(#[from] std::io::Error),
+    FileCreation(#[from] std::io::Error),
     #[error("Failed to convert path to string")]
-    PathConversionError,
+    PathConversion,
 }
 
 async fn fetch_sheet(spreadsheet_id: &str) -> Result<Bytes, SpreadsheetError> {
@@ -35,13 +35,13 @@ async fn save_file(data: Bytes, output_dir: PathBuf) -> Result<String, Spreadshe
     // Create the file name with the current date
     let file_name = format!("book-crossing-{}.xlsx", formatted_date);
     let file_path = output_dir.join(file_name);
-    
+
     let mut file = File::create(&file_path)?;
     file.write_all(&data)?;
 
     file_path
         .to_str()
-        .ok_or(SpreadsheetError::PathConversionError)
+        .ok_or(SpreadsheetError::PathConversion)
         .map(|s| s.to_string())
 }
 

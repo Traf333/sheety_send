@@ -19,7 +19,7 @@ A Rust application that takes snapshot of a public spreadsheet as an `.xlsx` fil
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/your_username/sheety_send.git
+git clone git@github.com:Traf333/sheety_send.git
 cd sheety_send
 ```
 
